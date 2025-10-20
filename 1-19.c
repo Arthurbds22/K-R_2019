@@ -19,8 +19,12 @@ int main(void) {
         if (i >= 0) { 
             linha[i + 1] = '\n'; 
             linha[i + 2] = '\0'; 
-            printf("%s", linha);
-        }   
+        }
+        
+        for (int k=i; k>=0;k--){
+            putchar(linha[k]);
+        }
+        putchar('\n');
        
     }
     return 0;

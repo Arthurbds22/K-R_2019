@@ -1,30 +1,40 @@
 #include <stdio.h>
 #define MAXLINHA 1000  // tamanho máximo da linha
+#define TABSTOP 8.
 
 int lelinha(char s[], int lim);
 
-/* remove espaços e tabs do fim e ignora linhas vazias */
+
 int main(void) {
     char linha[MAXLINHA];
     int tam;
 
     while ((tam = lelinha(linha, MAXLINHA)) > 0) {
-        int i = tam - 1;
+        int tabs = 8;
+        int cols = 0;
 
-        
-        while (i >= 0 && (linha[i] == ' ' || linha[i] == '\t' || linha[i] == '\n')) {
-            i--;
+        for (int i = 0; i < tam; i++) {
+            char c = linha[i];
+
+            if (c == '\t') {
+                int spaces = tabs - (cols % tabs);
+                for (int s = 0; s < spaces; s++) {
+                    putchar(' ');
+                    cols++;
+                }
+            } else if (c == '\n') {
+                putchar('\n');
+                cols = 0;
+            } else {
+                putchar(c);
+                cols++;
+            }
         }
-
-        if (i >= 0) { 
-            linha[i + 1] = '\n'; 
-            linha[i + 2] = '\0'; 
-            printf("%s", linha);
-        }   
-       
     }
+
     return 0;
 }
+
 
 
 int lelinha(char s[], int lim) {
